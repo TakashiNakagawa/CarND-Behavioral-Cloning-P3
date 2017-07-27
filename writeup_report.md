@@ -34,7 +34,7 @@ My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network
-* writeup_report.md or writeup_report.pdf summarizing the results
+* writeup_report.md summarizing the results
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing
@@ -50,19 +50,23 @@ The model.py file contains the code for training and saving the convolution neur
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24)
+My model consists of a convolution neural netowork with 5x5 or 3x3 filter sizes and depths between 24 and 64(model.py lines 110-121).
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18).
+The model includes RELU layers to introduce nonlinearity (code line 111, 115, 119, 122), and the data is normalized in the model using a Keras lambda layer (code line 107).
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21).
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 8-22).  
+The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+
+I decided to not to use dropout because without dropout layer, test and validation loss is almost same.
+
+
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 133).
 
 #### 4. Appropriate training data
 
@@ -123,3 +127,58 @@ After the collection process, I had X number of data points. I then preprocessed
 I finally randomly shuffled the data set and put Y% of the data into a validation set.
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+
+------
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to
+====================================================================================================
+lambda_1 (Lambda)                (None, 160, 320, 3)   0           lambda_input_1[0][0]
+____________________________________________________________________________________________________
+cropping2d_1 (Cropping2D)        (None, 65, 320, 3)    0           lambda_1[0][0]
+____________________________________________________________________________________________________
+convolution2d_1 (Convolution2D)  (None, 61, 316, 24)   1824        cropping2d_1[0][0]
+____________________________________________________________________________________________________
+activation_1 (Activation)        (None, 61, 316, 24)   0           convolution2d_1[0][0]
+____________________________________________________________________________________________________
+maxpooling2d_1 (MaxPooling2D)    (None, 30, 158, 24)   0           activation_1[0][0]
+____________________________________________________________________________________________________
+convolution2d_2 (Convolution2D)  (None, 26, 154, 36)   21636       maxpooling2d_1[0][0]
+____________________________________________________________________________________________________
+activation_2 (Activation)        (None, 26, 154, 36)   0           convolution2d_2[0][0]
+____________________________________________________________________________________________________
+maxpooling2d_2 (MaxPooling2D)    (None, 13, 77, 36)    0           activation_2[0][0]
+____________________________________________________________________________________________________
+convolution2d_3 (Convolution2D)  (None, 9, 73, 48)     43248       maxpooling2d_2[0][0]
+____________________________________________________________________________________________________
+activation_3 (Activation)        (None, 9, 73, 48)     0           convolution2d_3[0][0]
+____________________________________________________________________________________________________
+convolution2d_4 (Convolution2D)  (None, 7, 71, 64)     27712       activation_3[0][0]
+____________________________________________________________________________________________________
+activation_4 (Activation)        (None, 7, 71, 64)     0           convolution2d_4[0][0]
+____________________________________________________________________________________________________
+flatten_1 (Flatten)              (None, 31808)         0           activation_4[0][0]
+____________________________________________________________________________________________________
+dense_1 (Dense)                  (None, 100)           3180900     flatten_1[0][0]
+____________________________________________________________________________________________________
+dense_2 (Dense)                  (None, 50)            5050        dense_1[0][0]
+____________________________________________________________________________________________________
+dense_3 (Dense)                  (None, 10)            510         dense_2[0][0]
+____________________________________________________________________________________________________
+dense_4 (Dense)                  (None, 1)             11          dense_3[0][0]
+====================================================================================================
+Total params: 3,280,891
+Trainable params: 3,280,891
+Non-trainable params: 0
+____________________________________________________________________________________________________
+Epoch 1/5
+3346/3346 [==============================] - 147s - loss: 0.0672 - val_loss: 0.0206
+Epoch 2/5
+3346/3346 [==============================] - 150s - loss: 0.0217 - val_loss: 0.0182
+Epoch 3/5
+3346/3346 [==============================] - 153s - loss: 0.0212 - val_loss: 0.0227
+Epoch 4/5
+3346/3346 [==============================] - 148s - loss: 0.0200 - val_loss: 0.0187
+Epoch 5/5
+3346/3346 [==============================] - 143s - loss: 0.0200 - val_loss: 0.0190
+dict_keys(['val_loss', 'loss'])
