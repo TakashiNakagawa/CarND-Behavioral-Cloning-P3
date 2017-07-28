@@ -70,15 +70,19 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ...
-
-For details about how I created the training data, see the next section.
+Training data was chosen to keep the vehicle driving on the road.
+I drove cafully to on the center lane and about two tracks.
 
 ### Model Architecture and Training Strategy
 
 #### 1. Solution Design Approach
 
 The overall strategy for deriving a model architecture was to ...
+
+My first step was to use Lelnet. but not good.
+So, I decided to use NVidia Architecture. but it was not also good.
+then, I use augment the data.
+
 
 My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
 
