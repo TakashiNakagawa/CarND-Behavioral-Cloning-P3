@@ -155,7 +155,8 @@ Here is the example image of cropping:
 ![alt text][image9]
 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 5 as evidenced by graph.  
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting.
+2 epochs might be enough for training the model. But I trained till 5 epochs Because it didn't take a long time.
 ![alt text][image7]  
 ```
 Epoch 1/5
