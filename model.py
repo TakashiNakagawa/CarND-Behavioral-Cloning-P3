@@ -67,11 +67,10 @@ def generator(samples, use_augmented_image, batch_size=32):
     :return:
     '''
     num_samples = len(samples)
+    samples = sklearn.utils.shuffle(samples)
     while 1:
-        sklearn.utils.shuffle(samples, random_state=20)
         for offset in range(0, num_samples, batch_size):
             batch_samples = samples[offset:offset + batch_size]
-
             images = []
             angles = []
             for batch_sample in batch_samples:
@@ -86,7 +85,7 @@ def generator(samples, use_augmented_image, batch_size=32):
                 angles.append(angle)
             X_train = np.array(images)
             y_train = np.array(angles)
-            yield sklearn.utils.shuffle(X_train, y_train, random_state=20)
+            yield sklearn.utils.shuffle(X_train, y_train)
 
 
 train_generator = generator(train_samples, True, batch_size=32)
